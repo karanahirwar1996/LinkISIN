@@ -58,7 +58,6 @@ for index, row in news_df.iterrows():
 column_name = ''  
 if column_name and column_name in news_df.columns:
     news_df = news_df.drop(column_name, axis=1)
-news_df['Deep Score'] = news_df['Deep Score'].replace('', np.nan).astype('float')
 gsnew = client.open('Data_Source')
 main_sheet=gsnew.worksheet('NewsLink')
 main_sheet.clear()
