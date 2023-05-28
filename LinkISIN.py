@@ -15,6 +15,7 @@ news_df=pd.DataFrame(all_record_news)
 tag_list = list(details_df["Tag"])
 name_list = list(details_df["Name"])
 isin_list = list(details_df["ISIN"])
+sub_list = list(details_df["Sub Tag"])
 
 news_df['Match Stock'] = ""
 news_df['ISIN'] = ""
@@ -23,9 +24,9 @@ for index, row in news_df.iterrows():
     headline = row['Headline']
     matching_tag = ""
     matching_isin = ""
-    
+
     if pd.notnull(headline):
-        for tag, name, isin in zip(tag_list, name_list, isin_list):
+        for tag, name, sub, isin in zip(tag_list, name_list, sub_list, isin_list):
             if pd.notnull(tag) and str(tag) in str(headline):
                 matching_tag = tag
                 matching_isin = isin
@@ -36,10 +37,24 @@ for index, row in news_df.iterrows():
                     matching_tag = name
                     matching_isin = isin
                     break
-    
+
+        # Check sub-tags if name or tag not found
+        if not matching_tag:
+            for tag, name, sub, isin in zip(tag_list, name_list, sub_list, isin_list):
+                if pd.notnull(sub) and sub != "" and str(sub) in str(headline):
+                    matching_tag = tag
+                    matching_isin = isin
+                    break
+                if pd.notnull(name):
+                    stock_name_without_ltd = name.replace(" Ltd", "")
+                    if stock_name_without_ltd in str(headline):
+                        matching_tag = name
+                        matching_isin = isin
+                        break
+
     news_df.at[index, 'Match Stock'] = matching_tag
     news_df.at[index, 'ISIN'] = matching_isin
- column_name = ''  
+column_name = ''  
 if column_name and column_name in news_df.columns:
     news_df = news_df.drop(column_name, axis=1)
 news_df['Deep Score'] = news_df['Deep Score'].replace('', np.nan).astype('float')
