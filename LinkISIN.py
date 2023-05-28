@@ -71,6 +71,5 @@ for index, row in news_df.iterrows():
 gsnew = client.open('Data_Source')
 main_sheet = gsnew.worksheet('NewsLink')
 main_sheet.clear()
-set_with_dataframe(main_sheet, news_df)
 sheet.update([news_df.columns.values.tolist()]+news_df.values.tolist())
 print("Data Updated Successfully.....")
