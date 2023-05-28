@@ -1,5 +1,6 @@
 import pandas as pd
 import gspread
+import numpy as np
 from gspread_dataframe import set_with_dataframe
 from oauth2client.service_account import ServiceAccountCredentials
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
