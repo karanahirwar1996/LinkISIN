@@ -68,6 +68,8 @@ for index, row in news_df.iterrows():
     news_df.at[index, 'ISIN'] = matching_isin
 
 # Clear and update the 'NewsLink' sheet with news_df
+news_df['Deep Score']=news_df['Deep Score'].replace("",0)
+news_df['Deep Score']=news_df['Deep Score'].astype(float)
 gsnew = client.open('Data_Source')
 main_sheet = gsnew.worksheet('NewsLink')
 main_sheet.clear()
