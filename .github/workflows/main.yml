@@ -22,7 +22,7 @@ jobs:
           python-version: 3.x  # Change this to your desired Python version
 
       - name: Install dependencies
-        run: pip install pandas requests gspread gspread_dataframe oauth2client 
+        run: pip install pandas numpy requests gspread gspread_dataframe oauth2client 
 
       - name: Run Python code
         run: python LinkISIN.py
