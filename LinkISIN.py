@@ -66,6 +66,7 @@ for index, row in news_df.iterrows():
     news_df.at[index, 'Match Stock'] = matching_tag
     news_df.at[index, 'ISIN'] = matching_isin
 # Convert float values to strings
+news_df=news_df.astype(str)
 # Clear and update the 'NewsLink' sheet with news_df
 gsnew = client.open('Data_Source')
 main_sheet = gsnew.worksheet('NewsLink')
