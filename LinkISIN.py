@@ -1,7 +1,6 @@
 import pandas as pd
 import gspread
 import numpy as np
-from gspread_dataframe import set_with_dataframe
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Define scope and credentials
@@ -67,9 +66,9 @@ for index, row in news_df.iterrows():
     news_df.at[index, 'Match Stock'] = matching_tag
     news_df.at[index, 'ISIN'] = matching_isin
 # Convert float values to strings
-news_df['Deep Score'] = news_df['Deep Score'].apply(lambda x: str(x) if isinstance(x, float) else x)
 # Clear and update the 'NewsLink' sheet with news_df
 gsnew = client.open('Data_Source')
 main_sheet = gsnew.worksheet('NewsLink')
 main_sheet.clear()
-set_with_dataframe(main_sheet, news_df)
+main_sheet.update([news_df.columns.values.tolist()]+news_df.values.tolist())
+print("Data Updated Successfully.....")
